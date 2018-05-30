@@ -20,7 +20,6 @@ def create_app(test_config=None):
     # ensure the instance folder exists
     try:
         os.makedirs(app.instance_path)
-        print "app instance path at: " + app.instance_path
     except OSError:
         pass
 
