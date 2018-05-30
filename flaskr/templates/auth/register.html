@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} Register {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form method="post">
+  <!--'for' is used by the label to know which id it is associated with-->
+  <label for="username">Username</label>
+  <!-- required means form won't send if empty -->
+  <input name="username" id="username" required>
+  <label for="password">Password</label>
+  <input type="password" name="password" id="password" required>
+  <input type="submit" value="Register">
+</form>
+{% endblock %}
