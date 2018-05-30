@@ -20,12 +20,20 @@ def create_app(test_config=None):
     # ensure the instance folder exists
     try:
         os.makedirs(app.instance_path)
+        print "app instance path at: " + app.instance_path
     except OSError:
         pass
 
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
+    from . import db
+    db.init_app(app)
+
+    from . import auth
+    app.register_blueprint(auth.bp)
+
+    from . import blog
+    app.register_blueprint(blog.bp)
+    # so that url_for('index') or url_for('blog.index') will both work,
+    # generating the same / URL either way.
+    app.add_url_rule('/', endpoint='index')
 
     return app
