@@ -88,12 +88,7 @@ def comment(post_id):
                 (post_id, comment)
             )
             db.commit()
-            comments = db.execute(
-                'SELECT c.id, c.author, c.created, c.body'
-                ' FROM comment c JOIN post p ON c.post_id = p.id'
-                ' WHERE p.id = ?',
-                (post_id,)
-            ).fetchall()
+            return redirect(url_for('blog.comment', post_id=post_id))
 
     return render_template('blog/comment.html', post=post, comments=comments)
 
@@ -132,7 +127,7 @@ def delete(id):
     # checks if post exists and if the current user is the author
     get_post(id)
     db = get_db()
-    
+
     db.execute('DELETE FROM comment WHERE post_id = ?', (id,))
     db.execute('DELETE FROM post WHERE id = ?', (id,))
     db.commit()
