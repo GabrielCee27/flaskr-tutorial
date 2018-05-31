@@ -18,8 +18,7 @@
   {% for comment in comments %}
     <article class="post">
       <header>
-        <!-- Not inlcuding author name since it's anon anyways -->
-        <div class="about">{{ comment['created'].strftime('%Y-%m-%d')}}</div>
+        <div class="about">by {{comment['author']}} on {{comment['created'].strftime('%Y-%m-%d')}}</div>
       </header>
       <p class="body">{{ comment['body'] }}</p>
     </article>

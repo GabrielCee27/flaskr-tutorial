@@ -19,6 +19,7 @@ def index():
 
     return render_template('blog/index.html', posts=posts)
 
+
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
@@ -43,6 +44,7 @@ def create():
             return redirect(url_for('blog.index'))
 
     return render_template('blog/create.html')
+
 
 def get_post(id, check_author=True):
     post = get_db().execute(
@@ -82,10 +84,15 @@ def comment(post_id):
         if error is not None:
             flash(error)
         else:
+            author = "anonymous"
+
+            if g.user is not None:
+                author = g.user['username']
+
             db.execute(
-                'INSERT INTO comment (post_id, body)'
-                ' VALUES (?, ?)',
-                (post_id, comment)
+                'INSERT INTO comment (post_id, author, body)'
+                ' VALUES (?, ?, ?)',
+                (post_id, author, comment)
             )
             db.commit()
             return redirect(url_for('blog.comment', post_id=post_id))
