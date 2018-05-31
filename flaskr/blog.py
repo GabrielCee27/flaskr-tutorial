@@ -60,6 +60,44 @@ def get_post(id, check_author=True):
 
     return post
 
+@bp.route('/<int:post_id>/comment', methods=('GET', 'POST'))
+def comment(post_id):
+    post = get_post(post_id, False)
+    db = get_db()
+
+    comments = db.execute(
+        'SELECT c.id, c.author, c.created, c.body'
+        ' FROM comment c JOIN post p ON c.post_id = p.id'
+        ' WHERE p.id = ?',
+        (post_id,)
+    ).fetchall()
+
+    if request.method == 'POST':
+        comment = request.form['comment']
+        error = None
+
+        if not comment:
+            error = 'Comment cannot be empty.'
+
+        if error is not None:
+            flash(error)
+        else:
+            db.execute(
+                'INSERT INTO comment (post_id, body)'
+                ' VALUES (?, ?)',
+                (post_id, comment)
+            )
+            db.commit()
+            comments = db.execute(
+                'SELECT c.id, c.author, c.created, c.body'
+                ' FROM comment c JOIN post p ON c.post_id = p.id'
+                ' WHERE p.id = ?',
+                (post_id,)
+            ).fetchall()
+
+    return render_template('blog/comment.html', post=post, comments=comments)
+
+
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
@@ -94,6 +132,8 @@ def delete(id):
     # checks if post exists and if the current user is the author
     get_post(id)
     db = get_db()
+    
+    db.execute('DELETE FROM comment WHERE post_id = ?', (id,))
     db.execute('DELETE FROM post WHERE id = ?', (id,))
     db.commit()
     return redirect(url_for('blog.index'))

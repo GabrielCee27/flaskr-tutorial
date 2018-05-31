@@ -20,6 +20,7 @@
         {% endif %}
       </header>
       <p class="body">{{ post['body'] }}</p>
+      <a class"action" href="{{ url_for('blog.comment', post_id=post['id']) }}"> comments </a>      
     </article>
     {% if not loop.last %}
       <hr>
