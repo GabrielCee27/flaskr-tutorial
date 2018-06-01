@@ -1,34 +1,36 @@
-{% extends 'base.html' %}
+{% extends 'base_bootstrap.html' %}
 
 {% block header %}
-  <h1>{% block title %}Comments{% endblock %}</h1>
+  <!-- <h1>{% block title %}Comments{% endblock %}</h1> -->
 {% endblock %}
 
 {% block content %}
-  <article class="post">
+  <div class="blog-main">
     <header>
-      <div>
-        <h1>{{ post['title'] }}</h1>
-        <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</div>
+      <div class="blog-post">
+        <h3>{{ post['title'] }}</h3>
+        <p class="blog-post-meta">{{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</p>
       </div>
     </header>
     <p class="body">{{ post['body'] }}</p>
-  </article>
+  </div>
+
   <hr />
   {% for comment in comments %}
-    <article class="post">
+    <div class="blog-main">
       <header>
-        <div class="about">by {{comment['author']}} on {{comment['created'].strftime('%Y-%m-%d')}}</div>
+        <p class="blog-post-meta">by {{comment['author']}} on {{comment['created'].strftime('%Y-%m-%d')}}</p>
       </header>
       <p class="body">{{ comment['body'] }}</p>
-    </article>
+    </div>
     <hr/>
   {% endfor %}
   <form method="post">
-    <label for="comment">Comment</label>
-    <textarea name="comment" id="comment"></textarea>
-    <input type="submit" value=save />
+    <div class="form-group">
+      <label for="comment">Comment:</label>
+      <textarea class="form-control" name="comment" id="comment"></textarea>
+      <!-- <input type="submit" value=save /> -->
+      <button class="btn btn-primary" type="button" name="button">post</button>
+    </div>
   </form>
-  <hr>
-  <a class="action" href="{{ url_for('blog.index') }}">home</a>
 {% endblock %}
