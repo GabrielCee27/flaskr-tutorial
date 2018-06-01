@@ -13,7 +13,8 @@
 
     <div class="form-group">
       <label for="body">Body:</label>
-      <textarea class="form-control" name="body" id="body">{{ request.form['body'] }}</textarea>
+      <!-- TODO: Make text area larger -->
+      <textarea rows="6" class="form-control" name="body" id="body">{{ request.form['body'] }}</textarea>
       <button type="submit" class="btn btn-primary">post</button>
   </form>
 {% endblock %}

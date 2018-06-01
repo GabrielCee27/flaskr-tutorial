@@ -17,7 +17,8 @@
 
   <hr />
   {% for comment in comments %}
-    <div class="blog-main">
+  <!-- TODO: Indent comments to distinguish from post -->
+    <div class="comment-main">
       <header>
         <p class="blog-post-meta">by {{comment['author']}} on {{comment['created'].strftime('%Y-%m-%d')}}</p>
       </header>
@@ -30,7 +31,7 @@
       <label for="comment">Comment:</label>
       <textarea class="form-control" name="comment" id="comment"></textarea>
       <!-- <input type="submit" value=save /> -->
-      <button class="btn btn-primary" type="button" name="button">post</button>
+      <button class="btn btn-primary" type="submit" name="button">post</button>
     </div>
   </form>
 {% endblock %}
