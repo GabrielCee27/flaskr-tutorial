@@ -16,6 +16,7 @@ def test_register(client, app):
         ).fetchone() is not None
 
 # to run the same test function with different arguments
+# Error: first two tests aren't passing.
 @pytest.mark.parametrize(('username', 'password', 'message'), (
     ('', '', b'Username is required.'),
     ('a', '', b'Password is required.'),
