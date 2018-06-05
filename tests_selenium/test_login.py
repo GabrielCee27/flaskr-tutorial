@@ -10,7 +10,6 @@ class TestLogin(TestBase):
         Tests that a user can login w/ valid input and is redirected to home page.
         """
         self.driver.find_element_by_id("login_link").click()
-
         self.driver.find_element_by_id("username").send_keys("test")
         self.driver.find_element_by_id("password").send_keys("test")
         self.driver.find_element_by_id("submit_btn").click()
@@ -41,3 +40,19 @@ class TestLogin(TestBase):
         self.driver.find_element_by_id("submit_btn").click()
 
         assert url_for('auth.login') in self.driver.current_url
+
+    def test_logout(self):
+        """
+        Tests that the session is cleared and the user is redirected home.
+        """
+        self.driver.find_element_by_id("login_link").click()
+        self.driver.find_element_by_id("username").send_keys("test")
+        self.driver.find_element_by_id("password").send_keys("test")
+        self.driver.find_element_by_id("submit_btn").click()
+        assert url_for('blog.index') in self.driver.current_url
+
+        self.driver.find_element_by_id("logout_link").click()
+        time.sleep(3)
+
+        assert 'user_id' not in session
+        assert url_for('blog.index') in self.driver.current_url

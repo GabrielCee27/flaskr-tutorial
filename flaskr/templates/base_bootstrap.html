@@ -22,10 +22,10 @@
         {% if g.user %}
         <!-- TODO: present username -->
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('blog.create') }}">New Post</a>
+            <a id="create_link" class="nav-link" href="{{ url_for('blog.create') }}">New Post</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('auth.logout') }}">Log Out</a>
+            <a id="logout_link" class="nav-link" href="{{ url_for('auth.logout') }}">Log Out</a>
           </li>
         {% else %}
           <li class="nav-item">
