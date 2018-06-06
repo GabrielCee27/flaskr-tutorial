@@ -15,6 +15,16 @@ with open(os.path.join(os.path.dirname(__file__), 'data.sql'), 'rb') as f:
 
 db_fd, db_path = tempfile.mkstemp()
 
+def login(self, username, password):
+    """
+    A reusable login method for testing
+    """
+    self.driver.find_element_by_id("login_link").click()
+    self.driver.find_element_by_id("username").send_keys(username)
+    self.driver.find_element_by_id("password").send_keys(password)
+    self.driver.find_element_by_id("submit_btn").click()
+
+
 class TestBase(LiveServerTestCase):
 
     def create_app(self):
@@ -36,10 +46,6 @@ class TestBase(LiveServerTestCase):
         self.driver = webdriver.Chrome()
         self.driver.get(self.get_server_url())
 
-        # with app.app_context():
-        #     init_db()
-        #     get_db().executescript(_data_sql)
-
 
     def tearDown(self):
         os.close(db_fd)
@@ -54,14 +60,3 @@ class TestBase(LiveServerTestCase):
 
     if __name__ == '__main__':
         unittest.main()
-
-
-# import time
-# from flask import url_for
-#
-# class TestRegistration(TestBase):
-#
-#     def test_registration(self):
-#         self.driver.find_element_by_id("registration_link").click()
-#         time.sleep(1)
-#
