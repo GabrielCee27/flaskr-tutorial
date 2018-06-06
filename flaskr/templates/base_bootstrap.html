@@ -17,7 +17,7 @@
   <body>
     <!-- TODO: Add padding b/w navbar and next element -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark .justify-content-center">
-      <a class="navbar-brand" href="{{ url_for('blog.index') }}">Flaskr</a>
+      <a class="navbar-brand" href="{{ url_for('blog.index') }}" id="flaskr_btn">Flaskr</a>
       <ul class="navbar-nav">
         {% if g.user %}
         <!-- TODO: present username -->
