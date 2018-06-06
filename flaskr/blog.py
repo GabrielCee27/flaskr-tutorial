@@ -139,3 +139,7 @@ def delete(id):
     db.execute('DELETE FROM post WHERE id = ?', (id,))
     db.commit()
     return redirect(url_for('blog.index'))
+
+@bp.route('/base_bootstrap')
+def base_bootstrap():
+    return render_template('base_bootstrap.html')
