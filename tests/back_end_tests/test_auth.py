@@ -1,6 +1,7 @@
 import pytest
 from flask import g, session
 from flaskr.db import get_db
+from flaskr.auth import encode_auth_token
 
 def test_register(client, app):
 
@@ -40,6 +41,13 @@ def test_login(client, auth):
         assert session['user_id'] == 1
         assert g.user['username'] == 'test'
 
+
+def test_encode_auth_token(client, app):
+        username = "test"
+        password = "test"
+        auth_token = encode_auth_token(username)
+        print(auth_token)
+        # assert isinstance(auth_token, bytes)
 
 # @pytest.mark.parametrize(('username', 'password', 'message'), (
 #     ('a', 'test', b'Incorrect username.'),
