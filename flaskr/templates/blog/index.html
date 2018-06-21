@@ -13,13 +13,13 @@
           <p class="blog-post-meta">
             {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}
             {% if g.user['id'] == post['author_id'] %}
-              <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
+              <a id="edit_link" class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
             {% endif %}
           </p>
         </div>
       </header>
       <p class="body">{{ post['body'] }}</p>
-      <a class"action" href="{{ url_for('blog.comment', post_id=post['id']) }}">comments</a>
+      <a id="comments_link" class"action" href="{{ url_for('blog.comment', post_id=post['id']) }}">comments</a>
     </div>
     <hr>
   {% endfor %}

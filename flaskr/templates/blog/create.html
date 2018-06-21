@@ -14,7 +14,7 @@
     <div class="form-group">
       <label for="body">Body:</label>
       <!-- TODO: Make text area larger -->
-      <textarea rows="6" class="form-control" name="body" id="body">{{ request.form['body'] }}</textarea>
-      <button type="submit" class="btn btn-primary">post</button>
+      <textarea rows="6" class="form-control" name="body" id="body" required>{{ request.form['body'] }}</textarea>
+      <button id="submit_btn" type="submit" class="btn btn-primary">post</button>
   </form>
 {% endblock %}

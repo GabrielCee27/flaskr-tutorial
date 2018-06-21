@@ -19,6 +19,7 @@
   <hr>
   <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">
     <!-- <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');"> -->
-    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?');">delete</button>
+    <!-- <button id="delete_btn" type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?');">delete</button> -->
+    <button id="delete_btn" type="submit" class="btn btn-danger">delete</button>
   </form>
 {% endblock %}

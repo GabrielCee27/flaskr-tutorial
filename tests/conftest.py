@@ -1,5 +1,6 @@
 import os
 import tempfile
+import time
 
 import pytest
 from flaskr import create_app
@@ -11,19 +12,21 @@ with open(os.path.join(os.path.dirname(__file__), 'data.sql'), 'rb') as f:
 
 @pytest.fixture
 def app():
+    # initialize
     db_fd, db_path = tempfile.mkstemp()
-
     app = create_app({
         'TESTING': True,
         'DATABASE': db_path,
     })
 
+    # setup
     with app.app_context():
         init_db()
         get_db().executescript(_data_sql)
 
     yield app
 
+    # teardown
     os.close(db_fd)
     os.unlink(db_path)
 
@@ -36,6 +39,7 @@ def client(app):
 @pytest.fixture
 def runner(app):
     return app.test_cli_runner()
+
 
 class AuthActions(object):
     def __init__(self, client):
@@ -54,3 +58,35 @@ class AuthActions(object):
 @pytest.fixture
 def auth(client):
     return AuthActions(client)
+
+
+# TODO: get page after application is loaded
+
+# scope defines when the fixture will be invoked and how many times
+@pytest.fixture(scope="session")
+def driver_get(request):
+    from selenium import webdriver
+    web_driver = webdriver.Chrome()
+    session = request.node
+    for item in session.items:
+        cls = item.getparent(pytest.Class)
+        setattr(cls.obj, "driver", web_driver)
+    yield
+    web_driver.close()
+
+
+@pytest.fixture(scope="class")
+def driver_class(request):
+    from selenium import webdriver
+    web_driver = webdriver.Chrome()
+    request.cls.driver = web_driver
+    yield
+    web_driver.close()
+
+
+@pytest.fixture
+def drifver(app):
+    from selenium import webdriver
+    driver = webdriver.Chrome()
+    yield driver
+    driver.close()
