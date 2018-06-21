@@ -15,7 +15,7 @@ with open(os.path.join(os.path.dirname(__file__), 'data.sql'), 'rb') as f:
 
 db_fd, db_path = tempfile.mkstemp()
 
-def login(self, username, password):
+def login(self, username="test", password="test"):
     """
     A reusable login method for testing
     """
